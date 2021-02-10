@@ -6,7 +6,7 @@ pipeline {
  stages{
     stage('Git Checkout'){
          steps{
-           git credentialsId: 'jenkinsec2-user', url: 'https://git@github.com:PeterQin001/GitTest.git'
+           git credentialsId: 'jenkinsec2-user', url: 'git@github.com:PeterQin001/GitTest.git'
          }
      }
      stage('Terraform Init'){
@@ -14,10 +14,10 @@ pipeline {
              sh 'terraform init'
          }
      }
-     stage('Terraform Apply'){
-         steps{
-             sh label:'', script: 'teraform apply --auto-approve'
-         }
+ //    stage('Terraform Apply'){
+  //       steps{
+   //          sh label:'', script: 'teraform apply --auto-approve'
+ //        }
      }
  }
 }
