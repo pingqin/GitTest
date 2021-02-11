@@ -1,8 +1,6 @@
 pipeline {
     agent any
- //   tools {
-//  terraform 'terraform'
-//}
+
  stages{
     stage('Git Checkout'){
          steps{
@@ -16,7 +14,7 @@ pipeline {
      }
      stage('Terraform plan'){
         steps{
-             sh label:'', script: 'terraform plan --auto-approve'
+             sh 'terraform plan'
          }
      }
  }
