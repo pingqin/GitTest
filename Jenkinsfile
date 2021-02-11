@@ -3,11 +3,6 @@ pipeline {
     tools {
   terraform 'terraform'
 }
-pipeline {
-    agent any
-    tools {
-  terraform 'terraform'
-}
  stages{
     stage('Git Checkout'){
          steps{
