@@ -3,6 +3,11 @@ pipeline {
     tools {
   terraform 'terraform'
 }
+pipeline {
+    agent any
+    tools {
+  terraform 'terraform'
+}
  stages{
     stage('Git Checkout'){
          steps{
@@ -14,9 +19,10 @@ pipeline {
              sh 'terraform init'
          }
      }
- //    stage('Terraform Apply'){
-  //       steps{
-   //          sh label:'', script: 'teraform apply --auto-approve'
- //        }
+     stage('Terraform plan'){
+        steps{
+             sh label:'', script: 'terraform plan --auto-approve'
+         }
      }
  }
+}
