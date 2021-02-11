@@ -6,7 +6,7 @@ pipeline {
  stages{
     stage('Git Checkout'){
          steps{
-           git credentialsId: 'jenkinsec2-user', url: 'git@github.com:PeterQin001/GitTest.git'
+           git credentialsId: 'amzm3', url: 'git@github.com:PeterQin001/GitTest.git'
          }
      }
      stage('Terraform Init'){
