@@ -2,7 +2,7 @@ terraform {
   required_version = ">= 0.12.0"
 }
 provider "aws" {
-  version = ">= 2.28.1"
+ # version = ">= 2.28.1"
   region  = "us-east-1"
 }
 resource "aws_vpc" "my_vpc" {
