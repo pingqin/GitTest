@@ -1,5 +1,5 @@
 #########################################
-# enter user login ID here
+# enter user login ID below
 ##########################################
 transfer_server_user=["sftpuser1","sftpuser2","ftpuser3"]
 
