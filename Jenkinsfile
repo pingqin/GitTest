@@ -11,7 +11,7 @@ pipeline {
              sh 'terraform init'
          }
      }
-     stage('Terraform Destroy'){
+     stage('Terraform Apply'){
         steps{
              sh 'terraform destroy --auto-approve'
          }
