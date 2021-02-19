@@ -1,1 +1,67 @@
+#  main.tf
+########################
+provider "aws" {
+  region  = "us-east-1"
+}
 
+resource "aws_transfer_ssh_key" "transfer_server_ssh_key" {
+  for_each =  var.transfer_server_user_key
+#  count = length(var.transfer_server_user)
+
+  server_id = var.transfer_server
+
+   user_name = each.key
+
+   body      = each.value
+}
+
+
+resource "aws_transfer_user" "transfer_server_user" {
+
+ for_each = var.transfer_server_user_key
+
+# count = length(var.transfer_server_user)
+
+  server_id      = var.transfer_server
+  user_name      = each.key
+  role           = var.transfer_server_role
+  home_directory_type = "LOGICAL"
+  home_directory_mappings {
+    entry =  "/"
+    target = "/${var.bucket_name}"
+ }
+
+}
+
+
+
+
+###############################
+# vars.tf define variables
+#################################
+variable  "transfer_server" {
+    description = "Transfer_server"
+    type = string
+    default = "s-ad41f033819941279"
+}
+variable "bucket_name" {
+    description = " S3 bucket name"
+    type = string
+    default = "ohiobucket2/folder2"
+}
+
+variable  "transfer_server_role" {
+    description = "Transfer_server"
+    type = string
+    default = "arn:aws:iam::013700525790:role/role_ohb"
+
+}
+
+#############################################
+# input user and key date in map format
+#############################################
+variable "transfer_server_user_key"  {
+    description = "Transfer_server_user_key"
+    type = map
+
+}
