@@ -13,7 +13,7 @@ properties(
 )
 node('master') {
     stage('Git checkout') {
-        checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: '<make-new>', url: 'git@github.com:rizzob456/nct-sftp-transfer.git']]])
+        checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'amzm3', url: 'git@github.com:Peterqin001/GitTest.git']]])
     }
     stage('Terraform initialize') {
         terraform init
