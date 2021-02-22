@@ -16,23 +16,23 @@ node('master') {
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'amzm3', url: 'git@github.com:Peterqin001/GitTest.git']]])
     }
     stage('Terraform initialize') {
-        terraform init
-        terraform validate
+        "terraform init"
+        "terraform validate"
     }
-    stage('Running choice') {
-        echo "Running with your choice of: ${params.action}"
-        switch("${params.action}") {
-            case "plan":
-                echo "Running your choice of ${params.action}"
-                terraform plan --auto-approve
-                break
-            case "apply":
-                echo "Running your choice of ${params.action}"
-                terraform apply --auto-approve
-                break
-            default:
-                println("This is an error")
-                break
-        }
-    }
+    // stage('Running choice') {
+    //     echo "Running with your choice of: ${params.action}"
+    //     switch("${params.action}") {
+    //         case "plan":
+    //             echo "Running your choice of ${params.action}"
+    //             terraform plan --auto-approve
+    //             break
+    //         case "apply":
+    //             echo "Running your choice of ${params.action}"
+    //             terraform apply --auto-approve
+    //             break
+    //         default:
+    //             println("This is an error")
+    //             break
+    //     }
+    // }
 }
