@@ -16,8 +16,8 @@ node('master') {
         checkout([$class: 'GitSCM', branches: [[name: '*/main']], doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], userRemoteConfigs: [[credentialsId: 'amzm3', url: 'git@github.com:Peterqin001/GitTest.git']]])
     }
     stage('Terraform initialize') {
-        "terraform init"
-        "terraform validate"
+        sh 'terraform init'
+        sh  'terraform validate'
     }
     // stage('Running choice') {
     //     echo "Running with your choice of: ${params.action}"
