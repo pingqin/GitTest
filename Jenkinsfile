@@ -21,7 +21,7 @@ node('master') {
     }
     stage('Running choice') {
         echo "Running with your choice of: ${params.action}"
-        switch("${params.dryRun}") {
+        switch("${params.action}") {
             case "plan":
                 echo "Running your choice of ${params.action}"
                 terraform plan --auto-approve
