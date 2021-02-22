@@ -24,11 +24,11 @@ node('master') {
          switch("${params.action}") {
              case "plan":
                  echo "Running your choice of ${params.action}"
-               sh  'terraform plan --auto-approve'
+               sh  'terraform plan -auto-approve'
                  break
              case "apply":
                  echo "Running your choice of ${params.action}"
-               sh  'terraform apply --auto-approve'
+               sh  'terraform apply -auto-approve'
                  break
              default:
                  println("This is an error")
