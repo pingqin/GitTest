@@ -6,8 +6,8 @@ import groovy.io.FileType
 properties(
     [
         parameters(
-        choice(
-            choices: ["plan", "apply"], description: '', name: 'action')
+            [choice(
+            choices: ["plan", "apply"], description: '', name: 'action')]
         )
     ]
 )
