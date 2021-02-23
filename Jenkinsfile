@@ -35,7 +35,7 @@ node('master') {
                             timeout(time: 30, unit:'MINUTES')
                             sh 'terraform apply plan.out'
  //                             sh 'terraform destroy -auto-approve'                          
-//                          return true
+                            return true
                         } else {
                             return false
                         }
