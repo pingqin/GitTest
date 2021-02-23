@@ -32,7 +32,7 @@ node('master') {
                         if ("${params.action}" == 'apply'){
                             sh 'terraform plan -out=plan.out'
                             input (message: "Apply Plan?", ok: 'Apply')
-                            timeout(time: 30, unit:'MINUTES')
+//                            timeout(time: 30, unit:'MINUTES')
                             sh 'terraform apply plan.out'
  //                             sh 'terraform destroy -auto-approve'                          
                             return true
