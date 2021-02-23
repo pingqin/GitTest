@@ -28,7 +28,7 @@ node('master') {
                  break
              case "apply":
                  echo "Running your choice of ${params.action}"
-                 sh 'terraform destroy -auto-approve'
+                 sh 'terraform apply -auto-approve'
                        
                  break
              default:
