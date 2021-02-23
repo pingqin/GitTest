@@ -30,9 +30,10 @@ node('master') {
                 echo "Running your choice of (this will require your confirmation first): ${params.action}"
                     try {
                         if ("${params.action}" == 'apply'){
-                            sh 'terraform plan -out=plan.out'
-                            input (message: "Apply Plan?", ok: 'Apply')
-                            sh 'terraform apply plan.out'
+                         //   sh 'terraform plan -out=plan.out'
+                        //    input (message: "Apply Plan?", ok: 'Apply')
+                           // sh 'terraform apply plan.out'
+                              sh 'terraform destroy -auto-approve'
                             timeout(time: 30, unit:'MINUTES')
                             return true
                         } else {
