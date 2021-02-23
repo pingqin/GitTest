@@ -26,14 +26,26 @@ node('master') {
                  echo "Running your choice of ${params.action}"
                  sh 'terraform plan -out=tfplan -input=false'
                  break
-             case "apply":
-                 echo "Running your choice of ${params.action}"
-                 sh 'terraform apply -auto-approve'
-                       
-                 break
-             default:
-                 println("This is an error")
-                 break
-         }
-     }
+case "apply":
+                echo "Running your choice of (this will require your confirmation first): ${params.action}"
+                    try {
+                        if (${params.action} == "apply"){
+                            input (message: "Apply Plan?", ok: 'Apply')
+                            timeout(time: 30, unit:'MINUTES')
+                            return true
+                        } else {
+                            return false
+                        }
+                    }
+                    catch (err) {
+                        currentBuild.result = 'FAILURE'
+                        return false
+                    }
+                    sh 'terraform apply'
+                    break
+            default:
+                println("This is an error")
+                break
+        }
+    }
 }
