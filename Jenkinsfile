@@ -35,7 +35,7 @@ node('master') {
                                     input (message: "Apply Plan?", ok: 'Apply')
                                //      sh 'terraform apply plan.out'
                                      sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
-                                     sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/pqin/key-90dd116198e64739a'
+                                     sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/pqin/key-c291c99865b54d51b'
                               //      sh 'terraform destroy -auto-approve'
                                     return true
                                 }
