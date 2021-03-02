@@ -31,9 +31,10 @@ node('master') {
                     try {
                         if ("${params.action}" == 'apply'){
                             sh 'terraform plan -out=plan.out'
-                                timeout(time: 30, unit:'MINUTES') {
+                            sh 'terraform plan -out=plan.out'
+                             timeout(time: 30, unit:'MINUTES') {
                                     input (message: "Apply Plan?", ok: 'Apply')
-                                //       sh 'terraform apply plan.out'
+                                             sh 'terraform apply plan.out'
                                 //           sh 'terraform show'
                                  //          sh 'terraform state rm aws_transfer_user.transfer_server_user'
                                    //        sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key'
@@ -41,10 +42,10 @@ node('master') {
                                    //     sh 'terraform state rm aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
                                    //     sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key key-58577206171a4c178'
                                   //       sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/pqin'
-                                       sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
+                                 //      sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
                                  //      sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/pqin/key-72721ee58ed641169'
-                                        sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/user1/key-58577206171a4c178'
-                                //       sh 'terraform destroy -auto-approve'
+                                 //       sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/user1/key-58577206171a4c178'
+                                        sh 'terraform destroy -auto-approve'
                                          return true
                                 }
                         } else {
