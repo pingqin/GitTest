@@ -39,13 +39,13 @@ node('master') {
                                  //          sh 'terraform state rm aws_transfer_user.transfer_server_user'
                                    //        sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key'
                                   //         sh 'terraform  state list'
-                                   //     sh 'terraform state rm aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
+                                          sh 'terraform state rm aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
                                    //     sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key key-58577206171a4c178'
                                   //       sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/pqin'
                                  //      sh 'terraform import aws_transfer_user.transfer_server_user s-ad41f033819941279/user1'
-                                 //      sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/pqin/key-72721ee58ed641169'
-                                 //       sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/user1/key-58577206171a4c178'
-                                        sh 'terraform destroy -auto-approve'
+                                       sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/pqin/key-8362aedd95e048ba8'
+                                 //       sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key s-ad41f033819941279/ukey-8362aedd95e048ba8ser1/key-58577206171a4c178'
+                                 //       sh 'terraform destroy -auto-approve'
                                          return true
                                 }
                         } else {
