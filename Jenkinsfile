@@ -31,10 +31,10 @@ node('master') {
                     try {
                         if ("${params.action}" == 'apply'){
                             sh 'terraform plan -out=plan.out'
-                            sh 'terraform plan -out=plan.out'
+                      //    sh 'terraform plan -out=plan.out'
                              timeout(time: 30, unit:'MINUTES') {
                                     input (message: "Apply Plan?", ok: 'Apply')
-                                             sh 'terraform apply plan.out'
+                                            sh 'terraform apply plan.out'
                                 //           sh 'terraform show'
                                  //          sh 'terraform state rm aws_transfer_user.transfer_server_user'
                                    //        sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key'
