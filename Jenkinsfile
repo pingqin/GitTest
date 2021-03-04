@@ -34,9 +34,9 @@ node('master') {
                       //    sh 'terraform plan -out=plan.out'
                              timeout(time: 30, unit:'MINUTES') {
                                     input (message: "Apply Plan?", ok: 'Apply')
-                                   //         sh 'terraform apply plan.out'
-                                             sh 'terraform show'
-                                             sh 'echo  =================================' 
+                                            sh 'terraform apply plan.out'
+                                   //          sh 'terraform show'
+                                    //         sh 'echo  =================================' 
                                  //          sh 'terraform state rm aws_transfer_user.transfer_server_user'
                                    //        sh 'terraform state rm aws_transfer_ssh_key.transfer_server_ssh_key'
                                             sh 'terraform  state list'
