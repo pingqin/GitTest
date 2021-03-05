@@ -32,7 +32,7 @@ node('master') {
                         if ("${params.action}" == 'apply'){
                             sh 'terraform plan -out=plan.out'
                                 timeout(time: 30, unit:'MINUTES') {
-                                 //   input (message: "Apply Plan?", ok: 'Apply')
+                                     input (message: "Apply Plan?", ok: 'Apply')
                                   //     sh 'terraform apply plan.out'
                                    //         sh 'terraform show'
                                     //         sh 'terraform state list'
