@@ -33,7 +33,7 @@ node('master') {
                             sh 'terraform plan -out=plan.out'
                                 timeout(time: 30, unit:'MINUTES') {
                                     input (message: "Apply Plan?", ok: 'Apply')
-                                    //         sh 'terraform apply plan.out'
+                                          sh 'terraform apply plan.out'
                                     //         sh 'terraform show'
                                     //         sh 'terraform state list'
                                     //         sh 'echo  =================================' 
@@ -47,7 +47,7 @@ node('master') {
                                  //     sh 'terraform import aws_transfer_user.transfer_server_user[4] s-ad41f033819941279/user3'
                                  //     sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key[3] s-ad41f033819941279/pqin/key-8362aedd95e048ba8'
                                  //     sh 'terraform import aws_transfer_ssh_key.transfer_server_ssh_key[4] s-ad41f033819941279/user3/key-5e3b378d6d6542218'
-                                        sh 'terraform destroy -auto-approve'
+                                  //      sh 'terraform destroy -auto-approve'
                                          return true
                                 }
                         } else {
