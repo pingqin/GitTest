@@ -22,7 +22,6 @@ resource "aws_transfer_ssh_key" "transfer_server_ssh_key" {
     body      = element(values(var.transfer_server_user_key), count.index)
     depends_on = [aws_transfer_user.transfer_server_user]
 }
-
 ##############################
 # vars.tf define variables
 ##############################
