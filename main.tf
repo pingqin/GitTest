@@ -20,6 +20,7 @@ resource "aws_transfer_ssh_key" "transfer_server_ssh_key" {
     server_id = var.transfer_server
     user_name = element(aws_transfer_user.transfer_server_user.*.user_name, count.index)
     body      = element(values(var.transfer_server_user_key), count.index)
+    depends_on = [aws_transfer_user.transfer_server_user]
 }
 
 ##############################
