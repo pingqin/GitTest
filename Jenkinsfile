@@ -24,7 +24,8 @@ node('master') {
          switch("${params.action}") {
              case "plan":
                  echo "Running your choice of ${params.action}"
-             //    sh 'terraform plan -out=tfplan -input=false'
+                 sh 'rm tfplan& > /dev/null'
+                 sh 'terraform plan -out=tfplan -input=false'
               //   sh 'terraform plan -out=plan.out -input=false'
                  break
             case "apply":
