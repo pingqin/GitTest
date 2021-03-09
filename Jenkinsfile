@@ -34,7 +34,7 @@ node('master') {
                                 timeout(time: 30, unit:'MINUTES') {
                                      input (message: "Apply Plan?", ok: 'Apply')
                                  //     sh 'terraform apply plan.out'
-                                        sh    'terraform apply'
+                                        sh    'terraform apply -auto-approve'
                                 //      sh 'terraform destroy -auto-approve'
                                         return true
                                 }
