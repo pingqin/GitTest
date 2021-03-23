@@ -1,58 +1,130 @@
-#  main.tf:wq!
-provider "aws" {
-  region  = "us-east-1"
+resource "aws_secretsmanager_secret" "secret" {
+  count = length(var.users)
+  description = lookup(var.users[count.index], "Username")
+  name = join("/", [var.usernamePrefix, lookup(var.users[count.index], "Username")])
+  recovery_window_in_days = 0
+
+  tags = {
+    bu = var.tagBu
+    environment = var.tagEnvironment
+    company = var.tagCompany
+    bu = var.tagBu
+    product = var.tagProduct
+    owner = var.tagOwner
+    appid = var.tagAppid
+    classification = var.tagClassification
+  }
 }
 
-resource "aws_transfer_user" "transfer_server_user" {
-  count = length(var.transfer_server_user)
+resource "aws_secretsmanager_secret_version" "secret" {
+  count = length(var.users)
+  secret_id = aws_secretsmanager_secret.secret[count.index].id
 
-  server_id      = var.transfer_server
-  user_name      = element(var.transfer_server_user, count.index)
-  role           = var.transfer_server_role
-  home_directory_type = "LOGICAL"
-  home_directory_mappings {
-    entry =  "/"
-    target = "/${var.bucket_name}"
- }
-
+  secret_string = <<EOF
+{
+  "Role": "${join("/", [var.rolePrefix, lookup(var.users[count.index], "Role", "globalsftpUserBucketRole${var.tagBu}")])}",
+  "PublicKey": "${lookup(var.users[count.index], "PublicKey", "")}",
+  "HomeDirectoryDetails": "${lookup(var.users[count.index], "Directory", "[{\\\"Entry\\\": \\\"/\\\", \\\"Target\\\": \\\"/globalsftpbucket${var.bucketName}\\\"}]")}"
+  }
+EOF
 }
 
-resource "aws_transfer_ssh_key" "transfer_server_ssh_key" {
-  count = length(var.transfer_server_user)
 
-  server_id = var.transfer_server
-  user_name = element(aws_transfer_user.transfer_server_user.*.user_name, count.index)
-  body      = element(var.transfer_server_ssh_key, count.index)
+###### Business Unit Bucket ######
+resource "aws_s3_bucket" "b" {
+  bucket = "globalsftpbucket${var.bucketName}"
+  acl = "private"
+
+  server_side_encryption_configuration {
+    rule {
+      apply_server_side_encryption_by_default {
+        sse_algorithm = "AES256"
+      }
+    }
+  }
+
+  tags = {
+    bu = var.tagBu
+    environment = var.tagEnvironment
+    company = var.tagCompany
+    bu = var.tagBu
+    product = var.tagProduct
+    owner = var.tagOwner
+    appid = var.tagAppid
+    classification = var.tagClassification
+  }
 }
 
-#
-# vars.tf define variables
-#
-variable  "transfer_server" {
-    description = "Transfer_server"
-    type = string
-    default = "s-ad41f033819941279"
-}
-variable "bucket_name" {
-    description = " S3 bucket name"
-    type = string
-    default = "ohiobucket2/folder2"
+resource "aws_s3_bucket_public_access_block" "globalsftpBucketPolicy" {
+  bucket = aws_s3_bucket.b.id
+
+  restrict_public_buckets = true
+  ignore_public_acls = true
+  block_public_acls = true
+  block_public_policy = true
 }
 
-variable  "transfer_server_role" {
-    description = "Transfer_server"
-    type = string
-    default = "arn:aws:iam::013700525790:role/role_ohb"
 
+###### Business Unit Bucket Role ######
+resource "aws_iam_role" "globalsftpUserBucketRole" {
+  name = "globalsftpUserBucketRole${var.tagBu}"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Effect": "Allow",
+        "Principal": {
+            "Service": "transfer.amazonaws.com"
+        },
+        "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
+
+  tags = {
+    bu = var.tagBu
+    environment = var.tagEnvironment
+    company = var.tagCompany
+    bu = var.tagBu
+    product = var.tagProduct
+    owner = var.tagOwner
+    appid = var.tagAppid
+    classification = var.tagClassification
+  }
 }
 
-variable "transfer_server_user" {
-   description = " A list of users"
-   type = list
+
+###### Business Unit Bucket Policy ######
+resource "aws_iam_role_policy" "globalsftpUserBucketPolicy" {
+  name = "globalsftpUserBucketPolicy${var.tagBu}"
+  role = aws_iam_role.globalsftpUserBucketRole.id
+
+  policy = <<POLICY
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+        "Sid": "AllowListingBucketReadandWriteandDelete",
+        "Effect": "Allow",
+            "Action": [
+                "s3:PutObject",
+                "s3:PutObjectAcl",
+                "s3:GetObject",
+                "s3:DeleteObjectVersion",
+                "s3:DeleteObject",
+                "s3:GetObjectVersion",
+                "s3:ListBucket",
+                "s3:GetBucketLocation"
+            ],
+            "Resource": [
+                "arn:aws:s3:::globalsftpbucket${var.bucketName}/*",
+                "arn:aws:s3:::globalsftpbucket${var.bucketName}"
+            ]
+        }
+    ]
 }
-
-variable "transfer_server_ssh_key" {
-   description = " A list of public keys"
-   type = list
-
+POLICY
 }
